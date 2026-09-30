@@ -1,0 +1,146 @@
+# On This Day and What's New for Synology Photos: settings for
+# onthisday.py 1.5.0 and whatsnew.py 1.0.0
+# Keep it next to both scripts, in a folder only administrators can change.
+
+[general]
+# file = HTML page in the user's home folder (OnThisDay/YYYY-MM-DD.html)
+# email = email with thumbnails ([email] and [user:...] below)
+# file, email = both
+delivery = file
+
+# How far back: auto = oldest photo per space (else 1950), or a year like 1975
+first_year = auto
+
+# Photos per year, and in the whole email
+photos_per_year = 5
+max_photos = 12
+include_videos = yes
+
+# mosaic = fixed frames like OneDrive's memories, photos cut to fit with ffmpeg
+# rows   = uncropped, rows of equal height
+# Without a working ffmpeg the email falls back to rows and says so.
+layout = mosaic
+# auto = SynoCommunity FFmpeg first (newest version), DSM's own last;
+# the first that cuts a test photo is used. Or a path, or no.
+ffmpeg = auto
+
+# When a year has more than photos_per_year (shots within a minute are one
+# moment, picks spread over the day): starred first, then albums and own
+# folders, then these phone-backup folders (comma-separated)
+prefer_starred = yes
+backup_folders = MobileBackup
+
+# Other photos of the same day each year. no = always the same picks
+rotate_yearly = yes
+
+# Include albums other people shared with the user
+shared_albums = yes
+
+# A photo that is also in an album shows the album's name and opens in it
+album_first = yes
+
+# Open photos from shared albums inside the album. Puts the album's share
+# code into the email. Own albums that aren't shared need no code.
+album_links = no
+
+# Skip photos dated after the year their album folder starts with, e.g. a
+# scan with its 2024 scan date in "2000-04-25 Wedding"
+skip_date_mismatch = yes
+
+# Shared Space (shared folder "photo"); auto finds /volumeX/photo
+shared_space = yes
+shared_space_path = auto
+
+# Days to keep saved pages (file delivery); 0 = forever
+keep_days = 14
+
+# Synology Photos address your phones reach (e.g. Tailscale). Empty = no links.
+# Example: photos_link = http://100.64.0.10:5000/photo
+photos_link =
+
+# What changed in the albums since the last email:
+#   yes = "New in your albums" above the memories (sent even without memories)
+#   no  = not in On This Day; set this when whatsnew.py sends it in its own email
+news = yes
+# Thumbnails per news line, the rest as "+N more"
+news_photos = 4
+# Where the album notes are kept (root only; both scripts)
+state_dir = /volume1/@onthisday
+
+[exclude]
+# File names matching one of these regular expressions, one per line
+filename_patterns =
+    -WA\d{4}
+    ^WhatsApp (Image|Video)
+    ^FB_IMG_
+    ^received_
+# Folder names containing one of these words (e.g. "WhatsApp Images")
+folder_names =
+    WhatsApp
+    Facebook
+    Messenger
+
+[email]
+# dsm  = DSM's alert mail (Control Panel > Notification > Email). No password
+#        here. Only with a custom SMTP sender, not a Google/Microsoft sign-in.
+# smtp = a mail server of your choice: smtp_host, smtp_port, smtp_security;
+#        smtp_user only if it needs a login. Gmail: smtp.gmail.com, 587,
+#        starttls, you@gmail.com, app password via --import-smtp-password.
+transport = dsm
+
+# Sender; empty = DSM's notification sender
+from =
+
+smtp_host =
+smtp_port = 587
+smtp_security = starttls
+smtp_verify_tls = yes
+smtp_user =
+
+# One section per person: email, and photos_link if their phone uses another address
+[user:alice]
+email = alice@example.com
+# What's New: also list what albumtool.py added or made for alice (its undo
+# journals, relative to her home folder)
+# albumtool_folder = PhotoCleanup/AlbumTool
+
+[user:bob]
+email = bob@example.com
+# photos_link = http://100.64.0.11:5000/photo
+
+[texts]
+# All wording. {date}, {count}, {n}, {year}, {who}, {album} and {reason} are filled in.
+subject = On this day – {date}
+heading = On this day
+summary_one = {date} · 1 memory
+summary_many = {date} · {count} memories
+year_one = 1 year ago · {year}
+year_many = {n} years ago · {year}
+# after the third album/folder name in a year's heading
+more_places = +{n} more
+shared = Shared
+video = Video
+open_photos = Open Synology Photos
+footer = Sent by On This Day on your Synology NAS.
+months = January, February, March, April, May, June, July, August, September, October, November, December
+date_format = {day} {month}
+news_heading = New in your albums
+news_added_one = {who} added 1 photo to {album}
+news_added_many = {who} added {n} photos to {album}
+news_new_album = {who} shared a new album with you: {album} ({n} photos)
+news_gone_own = Your album {album} is gone (it had {n} photos)
+news_gone_shared = {who}'s album {album} is no longer shared with you
+news_removed_one = 1 photo left your album {album}
+news_removed_many = {n} photos left your album {album}
+news_more = +{n} more
+someone = Someone
+# at the bottom when the mosaic fell back to rows
+fallback_note = Photos shown uncropped: {reason}.
+# What's New (whatsnew.py)
+whatsnew_subject = What's new – {date}
+whatsnew_heading = What's new
+whatsnew_summary_one = {date} · 1 change in the albums
+whatsnew_summary_many = {date} · {count} changes in the albums
+whatsnew_footer = Sent by What's New on your Synology NAS.
+album_tool = Album Tool
+news_tool_new_album = {who} made the album {album} ({n} photos)
