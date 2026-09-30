@@ -14,7 +14,7 @@ Author: Egbert H. Schroeer · License: MIT · onthisday.py 1.5.0, whatsnew.py 1.
 - Each person sees only what they can see in Synology Photos: the script asks Synology Photos *as that user*.
 - **Albums first:** a photo that is also in an album shows the album's name and opens inside the album.
 - Leaves out WhatsApp, Facebook and Messenger images (adjustable).
-- Skips scans that carry their scan date: a photo dated 2024 in the album "2000-04-25 Wedding" is left out.
+- Skips scans that carry their scan date: a photo dated 2024 in the album "2000-07-30 Wedding" is left out.
 - Up to 5 photos per year, 12 in total.
 - Uses Synology's own thumbnails. A run back to 1950 takes seconds.
 - One email per person, or an HTML page in their home folder. Nothing is written into Synology Photos.
